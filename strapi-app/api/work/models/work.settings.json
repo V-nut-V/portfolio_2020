@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "works",
+  "info": {
+    "name": "Work"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Date": {
+      "type": "date"
+    },
+    "IconImage": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "ContentMedias": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "Tags": {
+      "type": "component",
+      "repeatable": true,
+      "component": "tags.tags"
+    },
+    "Colors": {
+      "type": "component",
+      "repeatable": true,
+      "component": "tags.tags"
+    },
+    "Description": {
+      "type": "richtext"
+    },
+    "work_types": {
+      "collection": "work-types"
+    }
+  }
+}

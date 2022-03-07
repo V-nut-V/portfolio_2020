@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "info_pages",
+  "info": {
+    "name": "Info Page"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "Infos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "infos.infos"
+    }
+  }
+}

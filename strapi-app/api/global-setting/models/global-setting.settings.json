@@ -1,0 +1,37 @@
+{
+  "kind": "singleType",
+  "collectionName": "global_settings",
+  "info": {
+    "name": "Global Setting"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20
+    },
+    "profileImage": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true
+    },
+    "Tags": {
+      "type": "component",
+      "repeatable": true,
+      "component": "tags.tags"
+    },
+    "SocialLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "social-links.social-links"
+    }
+  }
+}

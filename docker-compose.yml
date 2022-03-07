@@ -1,0 +1,89 @@
+version: "3.7"
+services:
+  nginx:
+    image: nginx:1.16-alpine
+    container_name: nginx
+    networks: 
+      - nginx_net
+    volumes:
+      - ./react-app/build/:/var/www/html/:ro
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./nginx/sites-enabled/:/etc/nginx/sites-enabled/
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
+    command: /bin/sh -c "while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"
+    depends_on:
+      - react-app
+      - strapi-app
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    networks:
+      - nginx_net
+    volumes:
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    restart: unless-stopped
+    entrypoint: /bin/sh -c "trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;"
+    depends_on:
+      - nginx
+  
+  react-app:
+    image: node:13.12.0-alpine
+    container_name: react-app
+    volumes:
+      - ./react-app:/react-app
+      - ./.env:/.env
+    command: /bin/sh -c "cd /react-app && yarn install && yarn build"
+
+  strapi-app:
+    image: strapi/strapi:alpine
+    container_name: strapi-app
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - DATABASE_CLIENT
+      - DATABASE_NAME
+      - DATABASE_HOST
+      - DATABASE_PORT
+      - DATABASE_USERNAME
+      - DATABASE_PASSWORD
+      - DO_SPACE_ACCESS_KEY_ID
+      - DO_SPACE_SECRET_ACCESS_KEY
+    command: /bin/sh -c "yarn install && NODE_ENV=production strapi build && NODE_ENV=production strapi start"
+    networks:
+      - strapi-app-network
+      - nginx_net
+    volumes: 
+      - ./strapi-app:/srv/app
+    ports:
+      - 1337:1337
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.0.4
+    container_name: mongo
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD
+    networks: 
+      - strapi-app-network
+    volumes: 
+      - ../db:/data/db
+    ports:
+      - 27017:27017
+
+networks:
+  nginx_net:
+    name: nginx_net
+  strapi-app-network:
+    driver: bridge

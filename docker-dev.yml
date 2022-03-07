@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  react-app:
+    image: node:13.12.0-alpine
+    container_name: react-app
+    volumes:
+      - ./react-app:/react-app
+      - ./.env:/.env
+    ports:
+      - 3000:3000
+    command: /bin/sh -c "cd /react-app && yarn install && yarn start"
+
+  strapi-app:
+    image: strapi/strapi:alpine
+    container_name: strapi-app
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - DATABASE_CLIENT
+      - DATABASE_NAME
+      - DATABASE_HOST
+      - DATABASE_PORT
+      - DATABASE_USERNAME
+      - DATABASE_PASSWORD
+    command: /bin/sh -c "yarn install && NODE_ENV=development strapi develop"
+    volumes: 
+      - ./strapi-app:/srv/app
+    ports:
+      - 1337:1337

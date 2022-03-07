@@ -1,0 +1,19 @@
+{
+  "provider": "aws-s3-sharp-resize",
+  "providerOptions": {
+    "accessKeyId": "${process.env.DO_SPACE_ACCESS_KEY_ID}",
+    "secretAccessKey": "${process.env.DO_SPACE_SECRET_ACCESS_KEY}",
+    "endpoint": "nyc3.digitaloceanspaces.com",
+    "optimize": {
+      "resize": false,
+      "width": 1000,
+      "height": 1000
+    },
+    "settings": {
+      "awsUploadFolder": "strapi"
+    },
+    "params": {
+      "Bucket": "harleylin"
+    }
+  }
+}

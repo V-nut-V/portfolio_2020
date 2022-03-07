@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_infos_infos",
+  "info": {
+    "name": "Infos",
+    "icon": "address-card"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Content": {
+      "type": "richtext"
+    },
+    "Icon": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

@@ -1,0 +1,49 @@
+#works_header
+  .container
+    position: relative
+    display: grid
+    grid-template-columns: 4fr 5fr
+    grid-gap: 3rem
+    align-items: center
+    min-height: 70rem
+    color: var(--dark-gray)
+    @media screen and ( max-width: 900px )
+      grid-template-columns: 1fr
+      align-items: unset
+      min-height: unset
+      width: 100%
+    .left
+      max-width: 34rem
+      margin-left: auto
+      z-index: 2
+      @media screen and ( max-width: 900px )
+        position: absolute
+        bottom: -2rem
+        margin-left: unset
+        grid-row: 2/3
+        padding: 0 3rem
+      h1
+        font-weight: 700
+        color: var(--dark-gray)
+        font-size: 4.5rem
+        line-height: 4.8rem
+        width: 15rem
+        margin-bottom: 1rem
+    .right
+      position: relative
+      height: 70%
+      min-height: 45rem
+      width: 100%
+      border-radius: 1rem
+      opacity: 0.4
+      z-index: 1
+      cursor: grab
+      @media screen and ( max-width: 900px )
+        height: 100%
+        top: -6rem
+      canvas
+        width: 100%!important
+        &:focus
+          outline: 0
+      &>div:focus
+        outline: 0

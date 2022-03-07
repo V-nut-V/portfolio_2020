@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_pages",
+  "info": {
+    "name": "Home Page"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "richtext"
+    }
+  }
+}

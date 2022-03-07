@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "work_types",
+  "info": {
+    "name": "Work Type"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Icon": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "Order": {
+      "type": "integer",
+      "unique": false
+    }
+  }
+}

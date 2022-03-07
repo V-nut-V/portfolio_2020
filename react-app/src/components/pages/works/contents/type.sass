@@ -1,0 +1,20 @@
+.type-wrapper
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+  grid-gap: 3rem 2rem
+  padding-bottom: 5rem
+  @media screen and ( max-width: 1000px )
+    grid-template-columns: repeat(2, 1fr)
+  @media screen and ( max-width: 500px )
+    grid-template-columns: 1fr
+
+button.load-more
+  display: block
+  border: 0
+  padding: 1rem 2rem
+  margin: 0 auto
+  border-radius: 10rem
+  font-weight: bold
+  cursor: pointer
+  &:hover
+    color: var(--blue)
